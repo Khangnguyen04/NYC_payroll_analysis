@@ -69,6 +69,8 @@ delete from city_payroll
 */ 
 
 
+-- Analyze how payroll expenses for the largest departments have changed over time since 2015.
+	
 -- Find the largest agencies by agency size in 2022
 select
     c.agency_name
