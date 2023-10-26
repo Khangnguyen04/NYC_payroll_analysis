@@ -93,7 +93,7 @@ limit 10 -- Only view the top 10 agencies
 
 
 /*
-    View displays the average gross growth from 2015-2022 across 10 largest agencies. 
+    CTE displays the average gross growth from 2015-2022 across 10 largest agencies. 
     We can use it to find the year-over-year difference by using 
     a simple calculation involving the lag function. However, the agencies
     'DEPT OF ED PER SESSION TEACHER', 'BOARD OF ELECTION POLL WORKERS', and
