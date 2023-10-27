@@ -170,12 +170,10 @@ order by
 
 /*
      CTE displaying the employee name, when they started working,
-     their tenure, and their avg yearly income. Join this CTE to the 
-     largest_agencies view created earlier to accurately display
-     yearly_income. Includes a case statement that takes the average 
+     their tenure, and their avg yearly income. Includes a case statement that takes the average 
      of'regular_gross_paid' column for 'DEPT OF ED PER SESSION TEACHER',
      'BOARD OF ELECTION POLL WORKERS', and 'DEPT OF ED HRLY SUPPORT STAFF' 
-     since these agencies do not include records from the 'base_salary' column, 
+     since these agencies do not include records from the 'base_salary' column. 
 */
 with employee_tenure_and_income as  (
 	select
@@ -213,8 +211,8 @@ with employee_tenure_and_income as  (
 	  , case
 		when e.days_employed <= 1095 then 'Entry level' -- 1-3 years for entry level
 		when e.days_employed > 1095 and e.days_employed <= 2190 then 'Mid level' -- 3-6 years for mid level
-		when e.days_employed > 2190 and e.days_employed <= 3285 then 'Mid-senior' -- 6-9 years for mid-senior levle
-		when e.days_employed >= 3285 then 'Senior level' -- 9+ years for senior level
+		when e.days_employed > 2190 and e.days_employed <= 3285 then 'Mid-senior' -- 6-9 years for mid-senior level
+		when e.days_employed > 3285 then 'Senior level' -- 9+ years for senior level
 	    else 'other' 
 	    end as employee_level
 	from
