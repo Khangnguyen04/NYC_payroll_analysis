@@ -487,7 +487,7 @@ with employee_hrly_wage as (
 
 
 -- Calculate the percentiles of hourly wage in the agencies
-, hrly_wage_percentile as ( 
+, percentiles as ( 
 	select
 	    e.agency_name
 	  , e.hrly_wage
@@ -503,24 +503,24 @@ with employee_hrly_wage as (
 -- Output results of hourly wage and ot hour percentiles of each agency
 , hrly_wage_percentiles as (	
 	select
-	    h.agency_name
-	  , round(avg(h.hrly_wage),2) as hrly_wage
+	    p.agency_name
+	  , round(avg(p.hrly_wage),2) as hrly_wage
 	    -- Avg the hourly wage of each employee that is in the 25th, 50th, 75th, and 100th percentile
-	  , round(avg(h.ot_hours),2) as ot_hours -- View avg ot hours of each employee that is in those percentiles
-	  , h.percentile
+	  , round(avg(p.ot_hours),2) as ot_hours -- View avg ot hours of each employee that is in those percentiles
+	  , p.percentile
 	from
-	    hrly_wage_percentile h
+	    percentiles p
 	where
-	      h.percentile = 25 -- 25th percentile
-	   or h.percentile = 50 -- Median
-	   or h.percentile = 75 -- 75th percentile
-	   or h.percentile = 95 -- Top earners
+	      p.percentile = 25 -- 25th percentile
+	   or p.percentile = 50 -- Median
+	   or p.percentile = 75 -- 75th percentile
+	   or p.percentile = 95 -- Top earners
 	group by
-	    h.agency_name
-	  , h.percentile
+	    p.agency_name
+	  , p.percentile
 	order by
-	     h.agency_name asc -- Order by agency name alphabetically
-	   , h.percentile asc -- Order by percentile from 25th onwards
+	     p.agency_name asc -- Order by agency name alphabetically
+	   , p.percentile asc -- Order by percentile from 25th onwards
 
 )
 
@@ -630,7 +630,7 @@ with avg_total_hrs_worked_by_agency as (
 			'BOARD OF ELECTION POLL WORKERS', 'DEPT OF ED HRLY SUPPORT STAFF', 
 			'FIRE DEPARTMENT', 'DEPARTMENT OF EDUCATION ADMIN', 
 			'DEPT OF PARKS & RECREATION', 'HRA/DEPT OF SOCIAL SERVICES')
-
+	
 	    and c.fiscal_year between '2015' and '2022' -- No values passed 2022
 	group by
 	    c.agency_name 
